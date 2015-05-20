@@ -1,0 +1,15 @@
+#!/bin/bash -x
+
+
+##EPOC=`perl -e 'print int(time)' 2>/dev/null` ; test "X${EPOC}" = "X" && exit 4
+SELF="$0" ; test "X${SELF}" = "X" && exit 2
+DIR=`dirname ${SELF}`
+BASE=`basename ${SELF}`
+
+
+cd ${DIR}/repos/.did || exit 9
+##echo "${EPOC}" > DONES
+
+vi DONES
+COMMENT=`cat DONES|sort -u|grep '.'` ; test "X${COMMENT}" = "X" && exit 14
+git commit -m "`cat DONES|sort -u|grep '.'`"   DONES
