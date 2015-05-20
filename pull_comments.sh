@@ -15,7 +15,7 @@ COMMENTS=`for i in * ; do
     git log  --format=%s  --author=sstecker  ${RANGE}
     }
   cd ..
-  done | sort -u | grep '.'`
+  done |grep -v -i merge| sort -u | grep '.'`
 
 cd ..
 mkdir -p MESGS/
