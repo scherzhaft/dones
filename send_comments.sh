@@ -10,8 +10,8 @@ test "X${RDY2SND}" = "X" && exit 10
 NEWDONES=`cat MESGS/*|grep -v -i merge|sort -u|grep '.'`
 test "X${NEWDONES}" = "X" && exit 10
 
-for i in `echo "${NEWDONES}"` ; do
-  ./didit.rb "${i}" && rm ./MESGS/*
+echo "${NEWDONES}"|while read line ; do
+  ./didit.rb "${line}" && rm ./MESGS/*
   done
 
 
