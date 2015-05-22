@@ -11,5 +11,5 @@ cd ${DIR}/repos/.did || exit 9
 ##echo "${EPOC}" > DONES
 
 vi DONES
-COMMENT=`cat DONES|sort -u|grep '.'` ; test "X${COMMENT}" = "X" && exit 14
-git commit -m "`cat DONES|sort -u|grep '.'`"   DONES
+COMMENT=`cat DONES|sort -u|grep "[A-Z,a-z,0-9]"` ; test "X${COMMENT}" = "X" && exit 14
+git commit -m "`cat DONES|sort -u|grep "[A-Z,a-z,0-9]"`"   DONES
