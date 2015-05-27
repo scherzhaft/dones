@@ -13,3 +13,7 @@ cd ${DIR}/repos/.did || exit 9
 vi DONES
 COMMENT=`cat DONES|sort -u|grep "[A-Z,a-z,0-9]"` ; test "X${COMMENT}" = "X" && exit 14
 git commit -m "`cat DONES|sort -u|grep "[A-Z,a-z,0-9]"`"   DONES
+
+cd ../.. || exit 17
+echo '(  ./pull_comments.sh ; ./send_comments.sh ) > /tmp/dones 2>&1'
+(  ./pull_comments.sh ; ./send_comments.sh ) > /tmp/dones 2>&1
