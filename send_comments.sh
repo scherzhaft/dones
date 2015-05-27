@@ -17,10 +17,12 @@ cat repos/.did/.git/config > ./logs.git/.git/config
 ALREADYSENTTODAY=`git --git-dir=logs.git/.git log --format=%s  --author=sstecker  --since=12am`
 test "X${ALREADYSENTTODAY}"  != "X" && {
   echo "${ALREADYSENTTODAY}"|while read line ; do
-    perl -p -i -e "s|^${line}\n||g"  MESGS/*
+    clean=`echo "${line}"|perl -p -e 's|\@|\\\@|g'`
+    perl -p -i -e "s|^${clean}\n||g"  MESGS/*
     done
   }
 
+##exit
   
 NEWDONES=`cat MESGS/*|grep -v -i merge|sort -u|grep "[A-Z,a-z,0-9]"`
 
@@ -28,7 +30,8 @@ NEWDONES=`cat MESGS/*|grep -v -i merge|sort -u|grep "[A-Z,a-z,0-9]"`
 test "X${NEWDONES}" != "X" &&  {
   echo "${NEWDONES}"|while read line ; do
     ./didit.rb "${line}" && {
-      perl -p -i -e "s|^${line}\n||g"  MESGS/*
+      clean=`echo "${line}"|perl -p -e 's|\@|\\\@|g'`
+      perl -p -i -e "s|^${clean}\n||g"  MESGS/*
       echo "${line}" > logs.git/DIDS
       cd logs.git || exit 19
       git add DIDS
