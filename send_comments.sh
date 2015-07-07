@@ -17,7 +17,7 @@ cat repos/.did/.git/config > ./logs.git/.git/config
 ALREADYSENTTODAY=`git --git-dir=logs.git/.git log --format=%s  --author=sstecker  --since=12am`
 test "X${ALREADYSENTTODAY}"  != "X" && {
   echo "${ALREADYSENTTODAY}"|while read line ; do
-    clean=`echo "${line}"|perl -p -e 's|\@|\\\@|g'|perl -p -e 's|\?|\\\?|g'|perl -p -e 's|\(|\\\(|g'|perl -p -e 's|\)|\\\)|g'|perl -p -e 's#\|#\\\|#g'|perl -p -e 's|\[|\\\[|g'|perl -p -e 's|\]|\\\]|g'|perl -p -e 's|\.|\\\.|g'|perl -p -e 's|\*|\\\*|g'`
+    clean=`echo "${line}"|perl -p -e 's|\@|\\\@|g'|perl -p -e 's|\?|\\\?|g'|perl -p -e 's|\(|\\\(|g'|perl -p -e 's|\)|\\\)|g'|perl -p -e 's#\|#\\\|#g'|perl -p -e 's|\[|\\\[|g'|perl -p -e 's|\]|\\\]|g'|perl -p -e 's|\.|\\\.|g'|perl -p -e 's|\*|\\\*|g'|perl -p -e 's|(\\$)|\\\\\1|g'`
     perl -p -i -e "s|^${clean}\n||g"  MESGS/*
     done
   }
