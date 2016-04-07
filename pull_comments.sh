@@ -22,3 +22,4 @@ mkdir -p MESGS/
 test "X${COMMENTS}" != "X" &&  echo "${COMMENTS}"  > MESGS/${EPOC}
 
 
+
