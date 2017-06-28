@@ -9,8 +9,8 @@ export CWD=`pwd`
 ##RDY2SND=`find MESGS -type f -mtime +24h`
 RDY2SND=`find MESGS -type f`
 test "X${RDY2SND}" = "X" && exit 10
-####NEWDONES=`cat MESGS/*|grep -v -i merge|sort -u|grep "[A-Z,a-z,0-9]"`
-####test "X${NEWDONES}" = "X" && exit 10
+####NEWCOMMENTS=`cat MESGS/*|grep -v -i merge|sort -u|grep "[A-Z,a-z,0-9]"`
+####test "X${NEWCOMMENTS}" = "X" && exit 10
 mkdir -p ./logs.git
 test -d ./logs.git/.git || git init logs.git
 cat repos/.did/.git/config > ./logs.git/.git/config
@@ -24,12 +24,14 @@ test "X${ALREADYSENTTODAY}"  != "X" && {
 
 ##exit
   
-NEWDONES=`cat MESGS/*|grep -v -i merge|sort -u|grep "[A-Z,a-z,0-9]"`
+NEWCOMMENTS=`cat MESGS/*|grep -v -i merge|sort -u|grep "[A-Z,a-z,0-9]"|egrep "[ \t]OPS-[0-9]+[ \t]*$"`
 
 
-test "X${NEWDONES}" != "X" &&  {
-  echo "${NEWDONES}"|while read line ; do
-    ./didit.rb "${line}" && {
+test "X${NEWCOMMENTS}" != "X" &&  {
+  echo "${NEWCOMMENTS}"|while read line ; do
+    __TICKET=`echo "${line}" | perl -p -e "s|^.*(OPS-[0-9]+).*?$|\1|g"`
+    test "X${__TICKET}" = "X" && continue
+    __USER="${__USER}"  __PASS="${__PASS}" __TICKET="${__TICKET}" __URL="${__URL}"  ./commentit.sh `echo "${line}" | perl -p -e "s|${__TICKET}||g"` && {
       clean=`echo "${line}"|perl -p -e 's|\@|\\\@|g'`
       perl -p -i -e "s|^${clean}\n||g"  MESGS/*
       echo "${line}" > logs.git/DIDS
