@@ -15,5 +15,7 @@ COMMENT=`cat DONES|sort -u|grep "[A-Z,a-z,0-9]"` ; test "X${COMMENT}" = "X" && e
 git commit -m "`cat DONES|sort -u|grep "[A-Z,a-z,0-9]"`"   DONES
 
 cd ../.. || exit 17
-echo '(  ./pull_comments.sh ; ./send_comments.sh ) > /tmp/dones 2>&1'
-(  ./pull_comments.sh ; ./send_comments.sh ) > /tmp/dones 2>&1
+####echo '(  ./pull_comments.sh ; ./send_comments.sh ) > /tmp/dones 2>&1'
+####(  ./pull_comments.sh ; ./send_comments.sh ) > /tmp/dones 2>&1
+echo '(  ./pull_comments.sh ; ./send_comments_jira.sh ) > /tmp/dones 2>&1'
+(  ./pull_comments.sh ; ~/.mydidcfg  ./send_comments_jira.sh ) > /tmp/dones 2>&1
