@@ -29,7 +29,7 @@ NEWDONES=`cat MESGS/*|grep -v -i merge|sort -u|grep "[A-Z,a-z,0-9]"`
 
 test "X${NEWDONES}" != "X" &&  {
   echo "${NEWDONES}"|while read line ; do
-    ./didit.rb "${line}" && {
+    true && {
       clean=`echo "${line}"|perl -p -e 's|\@|\\\@|g'`
       perl -p -i -e "s|^${clean}\n||g"  MESGS/*
       echo "${line}" > logs.git/DIDS
