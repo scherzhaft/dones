@@ -31,7 +31,7 @@ test "X${NEWCOMMENTS}" != "X" &&  {
   echo "${NEWCOMMENTS}"|while read line ; do
     __TICKET=`echo "${line}" | perl -p -e "s|^.*(OPS-[0-9]+).*?$|\1|g"`
     test "X${__TICKET}" = "X" && continue
-    __USER="${__USER}"  __PASS="${__PASS}" __TICKET="${__TICKET}" __URL="${__URL}"  ./commentit.sh `echo "${line}" | perl -p -e "s|${__TICKET}||g"` && {
+    __USER="${__USER}"  __PASS="${__PASS}" __TICKET="${__TICKET}" __URL="${__URL}"  ./commentit.sh `echo "${line}" | perl -p -e "s|${__TICKET}||g" | perl -p -e 's|\@|\\\@|g'` && {
       __USER="${__USER}"  __PASS="${__PASS}" __TICKET="${__TICKET}" __URL="${__URL}"  ./progressit.sh `echo "${line}" | perl -p -e "s|${__TICKET}||g"`
       clean=`echo "${line}"|perl -p -e 's|\@|\\\@|g'`
       perl -p -i -e "s|^${clean}\n||g"  MESGS/*
